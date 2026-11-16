@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assets</title>
+<style>
+:root{--bg:#f4f6fa;--card:#fff;--ink:#1c2433;--mut:#6b7587;--line:#e3e8f0;--acc:#1f6feb;--acc2:#e8f0fe;--red:#d92d20;--redbg:#fee4e2;--redbg2:#fecdca;--grn:#12805c;--amb:#b54708}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:14px}
+button,input,select,textarea{font:inherit}
+.hidden{display:none!important}
+/* login */
+#login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
+.lbox{background:var(--card);padding:28px;border-radius:14px;width:100%;max-width:340px;box-shadow:0 8px 30px #0001}
+.lbox h1{margin:0 0 4px;font-size:22px}.lbox p{margin:0 0 18px;color:var(--mut)}
+.lbox input{width:100%;margin-bottom:10px}
+.err{color:var(--red);min-height:18px;margin-bottom:6px;font-size:13px}
+input,select,textarea{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#fff;color:var(--ink);width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--acc2);border-color:var(--acc)}
+.btn{border:0;border-radius:8px;padding:8px 14px;cursor:pointer;background:var(--acc);color:#fff;font-weight:600}
+.btn.sec{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn.red{background:var(--red)}.btn.sm{padding:4px 9px;font-size:12px}
+.btn.full{width:100%}
+/* header */
+header{background:#fff;border-bottom:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:20}
+header h1{font-size:18px;margin:0}
+.sp{flex:1}
+.ver{color:var(--mut);font-size:11px}
+.bell{position:relative;background:#fff;border:1px solid var(--line);border-radius:10px;padding:6px 10px;cursor:pointer;font-size:16px}
+.bell b{position:absolute;top:-6px;left:-6px;background:var(--red);color:#fff;border-radius:10px;font-size:11px;padding:1px 6px}
+.user{font-size:13px;color:var(--mut)}
+nav{display:flex;gap:4px;padding:10px 16px 0;overflow-x:auto}
+nav button{border:0;background:transparent;padding:8px 14px;border-radius:8px 8px 0 0;cursor:pointer;color:var(--mut);font-weight:600;white-space:nowrap}
+nav button.on{background:#fff;color:var(--acc);border:1px solid var(--line);border-bottom-color:#fff}
+main{padding:0 16px 40px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:0 0 12px 12px;padding:16px}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.stat{background:var(--bg);border-radius:10px;padding:8px 14px;min-width:110px}
+.stat b{display:block;font-size:20px}.stat span{color:var(--mut);font-size:12px}
+.stat.red b{color:var(--red)}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.bar>*{flex:1 1 150px;width:auto}.bar .btn{flex:0 0 auto}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:860px}
+th,td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--line);vertical-align:middle}
+th{background:var(--bg);color:var(--mut);font-size:12px;position:sticky;top:0}
+tr.red td{background:var(--redbg)}
+tr.overdue td{background:var(--redbg2);font-weight:600}
+tr.red td:first-child{border-right:4px solid var(--red)}
+.badge{display:inline-block;border-radius:20px;padding:2px 9px;font-size:12px;background:var(--bg);color:var(--mut)}
+.badge.red{background:var(--red);color:#fff}
+.badge.grn{background:#d1fadf;color:var(--grn)}
+.badge.amb{background:#fef0c7;color:var(--amb)}
+.acts{display:flex;gap:4px;flex-wrap:wrap}
+.empty{text-align:center;color:var(--mut);padding:30px}
+/* teams */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.tcard{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff}
+.tcard h3{margin:0 0 4px}.tcard .cnt{color:var(--mut);font-size:12px;margin-bottom:8px}
+.mem{border-top:1px dashed var(--line);padding:8px 0}
+.mem b{font-size:13px}
+.chip{display:inline-block;margin:3px 0 0 4px;padding:3px 9px;border-radius:8px;background:var(--acc2);color:var(--acc);cursor:pointer;font-size:12px}
+.chip.red{background:var(--red);color:#fff}
+/* drawer */
+#drawer{position:fixed;top:0;left:0;bottom:0;width:380px;max-width:100%;background:#fff;box-shadow:4px 0 30px #0003;z-index:50;display:flex;flex-direction:column;transform:translateX(-105%);transition:.25s}
+#drawer.open{transform:none}
+#drawer .dh{padding:14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
+#drawer .dh h2{margin:0;font-size:16px;flex:1}
+#drawer .tabs{display:flex;gap:6px;padding:8px 14px;border-bottom:1px solid var(--line)}
+#drawer .tabs button{flex:1}
+#nlist{overflow-y:auto;flex:1}
+.n{padding:11px 14px;border-bottom:1px solid var(--line);display:flex;gap:10px}
+.n.unread{background:#f2f7ff}
+.n .ic{font-size:18px}
+.n.cal .ic{color:var(--red)}
+.n small{color:var(--mut);display:block;margin-top:2px}
+.n.calx{background:var(--redbg)}
+/* dialog */
+dialog{border:0;border-radius:14px;padding:0;width:min(520px,94vw);box-shadow:0 20px 60px #0004}
+dialog::backdrop{background:#0006}
+dialog form{padding:18px}
+dialog h2{margin:0 0 12px;font-size:17px}
+.f{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.f label{display:block;font-size:12px;color:var(--mut);margin-bottom:3px}
+.f .w{grid-column:1/-1}
+.dfoot{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+.sub{font-size:12px;color:var(--mut);margin:0 0 10px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.li{display:flex;gap:6px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
+.li span{flex:1}
+#toast{position:fixed;bottom:20px;right:50%;transform:translateX(50%);background:#1c2433;color:#fff;padding:10px 18px;border-radius:10px;z-index:99;display:none}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div id="login">
+  <form class="lbox" id="lform" autocomplete="off">
+    <h1>📦 Assets</h1>
+    <p>سجّل دخولك للمتابعة</p>
+    <input id="lu" placeholder="Username" autocapitalize="off" required>
+    <input id="lp" type="password" placeholder="Password" required>
+    <div class="err" id="lerr"></div>
+    <button class="btn full" type="submit">دخول</button>
+  </form>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app" class="hidden">
+  <header>
+    <h1>📦 Assets</h1><span class="ver">V1.1</span>
+    <span class="badge" id="sync">💾 محلي</span>
+    <div class="sp"></div>
+    <span class="user" id="uname"></span>
+    <button class="bell" id="bell" title="Notification Center">🔔<b id="bcount" class="hidden">0</b></button>
+    <button class="btn sec sm" id="logout">خروج</button>
+  </header>
+  <nav id="nav">
+    <button data-t="assets" class="on">الأجهزة</button>
+    <button data-t="teams">التيمات والأعضاء</button>
+    <button data-t="log">سجل الحركة</button>
+    <button data-t="settings" data-admin="1">الإعدادات</button>
+  </nav>
+  <main>
+    <div class="panel" id="tab-assets">
+      <div class="stats" id="stats"></div>
+      <div class="bar">
+        <input id="q" placeholder="🔍 بحث (اسم / سيريال / فئة)">
+        <select id="ft"></select>
+        <select id="fm"></select>
+        <select id="fc">
+          <option value="">كل الأجهزة</option>
+          <option value="due">محتاج معايرة (خلال شهر / متأخر)</option>
+          <option value="overdue">معايرة متأخرة</option>
+          <option value="nocal">بدون ميعاد معايرة</option>
+        </select>
+        <button class="btn" id="addAsset" data-edit="1">+ جهاز جديد</button>
+      </div>
+      <div class="tw"><table>
+        <thead><tr><th>الجهاز</th><th>Serial</th><th>الفئة</th><th>التيم</th><th>المسؤول</th><th>الحالة</th><th>ميعاد المعايرة</th><th></th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table></div>
+    </div>
+
+    <div class="panel hidden" id="tab-teams"><div class="grid" id="teamGrid"></div></div>
+
+    <div class="panel hidden" id="tab-log">
+      <div class="bar"><select id="lf"><option value="">كل الحركات</option><option value="cal">المعايرة</option><option value="move">النقل</option><option value="add">إضافة</option><option value="edit">تعديل</option><option value="del">حذف</option></select></div>
+      <div id="logList"></div>
+    </div>
+
+    <div class="panel hidden" id="tab-settings">
+      <div class="two">
+        <div>
+          <h3>التيمات</h3>
+          <div class="bar"><input id="newTeam" placeholder="اسم تيم جديد"><button class="btn" id="addTeam">إضافة</button></div>
+          <div id="teamList"></div>
+        </div>
+        <div>
+          <h3>الأعضاء</h3>
+          <div class="bar"><input id="newMem" placeholder="اسم العضو"><select id="newMemTeam"></select><button class="btn" id="addMem">إضافة</button></div>
+          <div id="memList"></div>
+        </div>
+      </div>
+      <hr style="border:0;border-top:1px solid var(--line);margin:18px 0">
+      <h3>البيانات</h3>
+      <p class="sub">البيانات محفوظة في المتصفح ده (localStorage). خد Backup بشكل دوري، وتقدر تنقلها لجهاز تاني بالـ Import.</p>
+      <div class="bar">
+        <button class="btn sec" id="expJson">Export Backup (JSON)</button>
+        <button class="btn sec" id="expCsv">Export Assets (CSV)</button>
+        <button class="btn sec" id="impJson">Import Backup</button>
+        <input type="file" id="impFile" accept=".json" class="hidden">
+        <button class="btn sec" id="askNotif">تفعيل تنبيهات المتصفح</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ============ NOTIFICATION CENTER ============ -->
+<aside id="drawer">
+  <div class="dh"><h2>🔔 Notification Center</h2><button class="btn sec sm" id="markRead">تحديد الكل كمقروء</button><button class="btn sec sm" id="closeDrawer">✕</button></div>
+  <div class="tabs">
+    <button class="btn sm" data-nf="">الكل</button>
+    <button class="btn sec sm" data-nf="cal">معايرة</button>
+    <button class="btn sec sm" data-nf="mov">حركة</button>
+  </div>
+  <div id="nlist"></div>
+</aside>
+
+<!-- ============ DIALOGS ============ -->
+<dialog id="dAsset"><form method="dialog" id="fAsset">
+  <h2 id="dAssetTitle">جهاز</h2>
+  <div class="f">
+    <div class="w"><label>اسم الجهاز *</label><input id="aName" required></div>
+    <div><label>Serial</label><input id="aSerial"></div>
+    <div><label>الفئة</label><input id="aCat" list="cats"><datalist id="cats"></datalist></div>
+    <div><label>التيم *</label><select id="aTeam" required></select></div>
+    <div><label>المسؤول (عضو في التيم)</label><select id="aMem"></select></div>
+    <div><label>الحالة</label><select id="aStatus"><option>شغال</option><option>في معايرة</option><option>صيانة</option><option>خارج الخدمة</option></select></div>
+    <div><label>ميعاد المعايرة القادم</label><input type="date" id="aCal"></div>
+    <div><label>دورة المعايرة (شهور)</label><input type="number" min="1" id="aInt" placeholder="12"></div>
+    <div><label>آخر معايرة</label><input type="date" id="aLast"></div>
+    <div class="w"><label>ملاحظات</label><textarea id="aNotes" rows="2"></textarea></div>
+  </div>
+  <div class="dfoot"><button type="button" class="btn sec" data-close>إلغاء</button><button type="submit" class="btn">حفظ</button></div>
+</form></dialog>
+
+<dialog id="dMove"><form method="dialog" id="fMove">
+  <h2 id="dMoveTitle">نقل جهاز</h2>
+  <p class="sub" id="dMoveFrom"></p>
+  <div class="f">
+    <div><label>إلى تيم *</label><select id="mTeam" required></select></div>
+    <div><label>إلى عضو</label><select id="mMem"></select></div>
+    <div class="w"><label>سبب / ملاحظة</label><input id="mNote"></div>
+  </div>
+  <div class="dfoot"><button type="button" class="btn sec" data-close>إلغاء</button><button type="submit" class="btn">نقل</button></div>
+</form></dialog>
+
+<dialog id="dCal"><form method="dialog" id="fCal">
+  <h2>تسجيل معايرة</h2>
+  <p class="sub" id="dCalName"></p>
+  <div class="f">
+    <div><label>تاريخ المعايرة</label><input type="date" id="cDone" required></div>
+    <div><label>الميعاد القادم</label><input type="date" id="cNext"></div>
+  </div>
+  <div class="dfoot"><button type="button" class="btn sec" data-close>إلغاء</button><button type="submit" class="btn">حفظ</button></div>
+</form></dialog>
+
+<div id="toast"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+/* =====================================================
+   FIREBASE  —  الصق هنا الـ config بتاع مشروعك
+   (Firebase Console ← Project settings ← Your apps ← Web app)
+   لو سيبته فاضي البرنامج يشتغل محلي بس (localStorage)
+   ===================================================== */
+const FIREBASE_CONFIG = {
+  apiKey: 'AIzaSyDyrZJk085831C_ksVjXpKeiQk3bIAvpMg',
+  authDomain: 'assets-3f264.firebaseapp.com',
+  projectId: 'assets-3f264',
+  storageBucket: 'assets-3f264.firebasestorage.app',
+  messagingSenderId: '260929151189',
+  appId: '1:260929151189:web:a07ad2043a545d3244025c'
+};
+const CLOUD = !!FIREBASE_CONFIG.apiKey && typeof firebase !== 'undefined';
+
+/* =====================================================
+   LOCAL USERS  —  عدّل المستخدمين هنا
+   role: admin  = كل الصلاحيات (تيمات/أعضاء/حذف/Import)
+         editor = إضافة وتعديل ونقل الأجهزة وتسجيل المعايرة
+         viewer = عرض فقط
+   ===================================================== */
+const USERS = [
+  { u: 'nassif',  p: '1234', name: 'Nassif Victor', role: 'admin'  },
+  { u: 'team',    p: '1234', name: 'Team Member',   role: 'editor' },
+  { u: 'viewer',  p: '1234', name: 'Viewer',        role: 'viewer' }
+];
+const WARN_MONTHS = 1;            // التنبيه قبل ميعاد المعايرة بكام شهر
+const DB_KEY = 'assets_db_v1', SESSION_KEY = 'assets_session_v1';
+
+/* ---------- helpers ---------- */
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const pad = n => String(n).padStart(2, '0');
+const ymd = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const parseD = s => { const [y,m,d] = s.split('-').map(Number); return new Date(y, m-1, d); };
+const today0 = () => { const d = new Date(); d.setHours(0,0,0,0); return d; };
+const addMonths = (s, n) => { const d = parseD(s); d.setMonth(d.getMonth()+n); return ymd(d); };
+const fmtTs = ts => new Date(ts).toLocaleString('ar-EG', { dateStyle: 'medium', timeStyle: 'short' });
+function toast(t){ const e=$('toast'); e.textContent=t; e.style.display='block'; clearTimeout(toast.t); toast.t=setTimeout(()=>e.style.display='none',2500); }
+
+/* ---------- storage ---------- */
+let db;
+function loadDb(){
+  try { db = JSON.parse(localStorage.getItem(DB_KEY)); } catch(e){ db = null; }
+  if (!db) db = { teams: [], members: [], assets: [], log: [] };
+}
+function saveDb(){ localStorage.setItem(DB_KEY, JSON.stringify(db)); if (CLOUD) pushChanges(); }
+loadDb();
+
+/* ---------- Firebase sync (Firestore: assets_teams / assets_members / assets_assets / assets_log) ---------- */
+const COLS = ['teams', 'members', 'assets', 'log'];
+let fdb = null, cloudLoaded = false;
+const shadow = { teams: {}, members: {}, assets: {}, log: {} };
+const gotFirst = {};
+function setSync(t, ok){ const e = $('sync'); e.textContent = t; e.className = 'badge ' + (ok ? 'grn' : 'amb'); }
+function initCloud(){
+  const localCopy = JSON.parse(JSON.stringify(db));
+  firebase.initializeApp(FIREBASE_CONFIG);
+  fdb = firebase.firestore();
+  try { fdb.enablePersistence({ synchronizeTabs: true }).catch(() => {}); } catch(e){}
+  setSync('☁️ جاري الاتصال…', false);
+  COLS.forEach(c => {
+    let q = fdb.collection('assets_' + c);
+    if (c === 'log') q = q.orderBy('ts', 'desc').limit(500);
+    q.onSnapshot(snap => {
+      const arr = []; shadow[c] = {};
+      snap.forEach(d => { const x = d.data(); arr.push(x); shadow[c][x.id] = JSON.stringify(x); });
+      if (c === 'log') arr.sort((a, b) => b.ts - a.ts);
+      db[c] = arr; gotFirst[c] = true;
+      if (!COLS.every(k => gotFirst[k])) return;
+      if (!cloudLoaded) {
+        cloudLoaded = true;
+        const empty = COLS.every(k => !db[k].length);
+        const hasLocal = COLS.some(k => localCopy[k] && localCopy[k].length);
+        if (empty && hasLocal) { db = localCopy; pushChanges(); toast('تم رفع البيانات المحلية للـ Firebase'); }
+      }
+      localStorage.setItem(DB_KEY, JSON.stringify(db));
+      setSync('☁️ متزامن', true);
+      if (me) { if (checkCalibration()) pushChanges(); renderAll(); }
+    }, err => setSync('⚠️ ' + (err.code || 'خطأ'), false));
+  });
+}
+async function pushChanges(){
+  if (!fdb || !cloudLoaded) return;
+  const ops = [];
+  COLS.forEach(c => {
+    const cur = {};
+    db[c].forEach(x => {
+      const s = JSON.stringify(x); cur[x.id] = 1;
+      if (shadow[c][x.id] !== s) { ops.push(['set', c, x.id, JSON.parse(s)]); shadow[c][x.id] = s; }
+    });
+    if (c !== 'log') Object.keys(shadow[c]).forEach(id => { if (!cur[id]) { ops.push(['del', c, id]); delete shadow[c][id]; } });
+  });
+  for (let i = 0; i < ops.length; i += 400) {
+    const b = fdb.batch();
+    ops.slice(i, i + 400).forEach(([t, c, id, data]) => {
+      const ref = fdb.collection('assets_' + c).doc(id);
+      t === 'set' ? b.set(ref, data) : b.delete(ref);
+    });
+    try { await b.commit(); } catch(err){ setSync('⚠️ فشل الحفظ: ' + (err.code || ''), false); }
+  }
+}
+
+/* ---------- session ---------- */
+let me = null;
+const can = { edit: () => me && me.role !== 'viewer', admin: () => me && me.role === 'admin' };
+
+$('lform').addEventListener('submit', e => {
+  e.preventDefault();
+  const u = USERS.find(x => x.u.toLowerCase() === $('lu').value.trim().toLowerCase() && x.p === $('lp').value);
+  if (!u) { $('lerr').textContent = 'اسم المستخدم أو الباسورد غلط'; return; }
+  localStorage.setItem(SESSION_KEY, u.u);
+  start(u);
+});
+$('logout').onclick = () => { localStorage.removeItem(SESSION_KEY); location.reload(); };
+
+function start(u){
+  me = u;
+  $('login').classList.add('hidden'); $('app').classList.remove('hidden');
+  $('uname').textContent = `${u.name} (${u.role})`;
+  document.querySelectorAll('[data-admin]').forEach(b => b.classList.toggle('hidden', !can.admin()));
+  document.querySelectorAll('[data-edit]').forEach(b => b.classList.toggle('hidden', !can.edit()));
+  checkCalibration();
+  renderAll();
+}
+if (CLOUD) initCloud();
+(function auto(){
+  const s = localStorage.getItem(SESSION_KEY);
+  const u = USERS.find(x => x.u === s);
+  if (u) start(u);
+})();
+
+/* ---------- log / notifications ---------- */
+function addLog(type, text, extra = {}){
+  db.log.unshift({ id: extra.id || uid(), ts: Date.now(), type, text, user: extra.system ? 'النظام' : (me ? me.name : ''), key: extra.key || null, assetId: extra.assetId || null });
+  if (db.log.length > 2000) db.log.length = 2000;
+}
+const seenKey = () => 'assets_seen_' + (me ? me.u : '');
+const lastSeen = () => Number(localStorage.getItem(seenKey()) || 0);
+const isCalLog = l => l.type === 'cal-soon' || l.type === 'cal-over' || l.type === 'cal-done';
+const unreadCount = () => db.log.filter(l => l.ts > lastSeen() && l.user !== (me && me.name)).length
+                         + db.log.filter(l => l.ts > lastSeen() && l.user === (me && me.name) && l.type.startsWith('cal-')).length;
+
+/* ---------- calibration logic ---------- */
+function calState(a){
+  if (!a.calDate) return 'none';
+  const due = parseD(a.calDate), t = today0();
+  if (due < t) return 'overdue';
+  if (t >= parseD(addMonths(a.calDate, -WARN_MONTHS))) return 'soon';
+  return 'ok';
+}
+const daysLeft = a => Math.round((parseD(a.calDate) - today0()) / 864e5);
+
+function checkCalibration(){
+  if (CLOUD && !cloudLoaded) return 0;
+  let added = 0;
+  db.assets.forEach(a => {
+    const st = calState(a);
+    if (st !== 'soon' && st !== 'overdue') return;
+    const key = `${a.id}|${a.calDate}|${st}`;
+    if (a.alerted === key) return;
+    a.alerted = key;
+    const d = daysLeft(a);
+    const txt = st === 'overdue'
+      ? `معايرة متأخرة: "${a.name}" (ميعادها ${a.calDate} — متأخر ${Math.abs(d)} يوم)`
+      : `تنبيه معايرة: "${a.name}" محتاج معايرة خلال ${d} يوم (${a.calDate})`;
+    addLog(st === 'overdue' ? 'cal-over' : 'cal-soon', txt, { system: true, key, assetId: a.id, id: 'c_' + key.replace(/\|/g, '_') });
+    added++;
+    if ('Notification' in window && Notification.permission === 'granted') {
+      try { new Notification('Assets — معايرة', { body: txt }); } catch(e){}
+    }
+  });
+  if (added) saveDb();
+  return added;
+}
+setInterval(() => { if (me && checkCalibration()) renderAll(); }, 30 * 60 * 1000);
+window.addEventListener('storage', e => { if (!CLOUD && e.key === DB_KEY && me) { loadDb(); renderAll(); } });
+
+/* ---------- lookups ---------- */
+const team = id => db.teams.find(t => t.id === id);
+const member = id => db.members.find(m => m.id === id);
+const teamName = id => (team(id) || {}).name || '—';
+const memName = id => (member(id) || {}).name || 'بدون مسؤول';
+function opt(list, sel, first){
+  return (first !== undefined ? `<option value="">${first}</option>` : '') +
+    list.map(x => `<option value="${esc(x.id)}" ${x.id === sel ? 'selected' : ''}>${esc(x.name)}</option>`).join('');
+}
+
+/* ---------- rendering ---------- */
+function renderAll(){ renderStats(); renderFilters(); renderAssets(); renderTeams(); renderLog(); renderSettings(); renderBell(); renderDrawer(); }
+
+function renderStats(){
+  const due = db.assets.filter(a => ['soon','overdue'].includes(calState(a))).length;
+  const over = db.assets.filter(a => calState(a) === 'overdue').length;
+  $('stats').innerHTML =
+    `<div class="stat"><b>${db.assets.length}</b><span>إجمالي الأجهزة</span></div>
+     <div class="stat"><b>${db.teams.length}</b><span>تيمات</span></div>
+     <div class="stat ${due ? 'red' : ''}"><b>${due}</b><span>محتاج معايرة</span></div>
+     <div class="stat ${over ? 'red' : ''}"><b>${over}</b><span>معايرة متأخرة</span></div>`;
+}
+
+function renderFilters(){
+  const ft = $('ft').value, fm = $('fm').value;
+  $('ft').innerHTML = opt(db.teams, ft, 'كل التيمات');
+  const mems = ft ? db.members.filter(m => m.teamId === ft) : db.members;
+  $('fm').innerHTML = opt(mems, fm, 'كل الأعضاء');
+  $('cats').innerHTML = [...new Set(db.assets.map(a => a.category).filter(Boolean))].map(c => `<option value="${esc(c)}">`).join('');
+}
+
+function renderAssets(){
+  const q = $('q').value.trim().toLowerCase(), ft = $('ft').value, fm = $('fm').value, fc = $('fc').value;
+  let rows = db.assets.filter(a => {
+    if (ft && a.teamId !== ft) return false;
+    if (fm && a.memberId !== fm) return false;
+    const st = calState(a);
+    if (fc === 'due' && !['soon','overdue'].includes(st)) return false;
+    if (fc === 'overdue' && st !== 'overdue') return false;
+    if (fc === 'nocal' && st !== 'none') return false;
+    if (q && !`${a.name} ${a.serial} ${a.category}`.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  rows.sort((a, b) => (a.calDate || '9999').localeCompare(b.calDate || '9999'));
+  if (!rows.length){ $('tbody').innerHTML = `<tr><td colspan="8" class="empty">مفيش أجهزة</td></tr>`; return; }
+  $('tbody').innerHTML = rows.map(a => {
+    const st = calState(a);
+    let calCell = '<span class="badge">—</span>';
+    if (st !== 'none'){
+      const d = daysLeft(a);
+      const b = st === 'overdue' ? `<span class="badge red">متأخر ${Math.abs(d)} يوم</span>`
+              : st === 'soon' ? `<span class="badge red">باقي ${d} يوم</span>`
+              : `<span class="badge grn">باقي ${d} يوم</span>`;
+      calCell = `${esc(a.calDate)} ${b}`;
+    }
+    const acts = can.edit() ? `
+      <button class="btn sec sm" onclick="editAsset('${a.id}')">تعديل</button>
+      <button class="btn sec sm" onclick="moveAsset('${a.id}')">نقل</button>
+      <button class="btn sec sm" onclick="calAsset('${a.id}')">تمت معايرة</button>
+      ${can.admin() ? `<button class="btn red sm" onclick="delAsset('${a.id}')">حذف</button>` : ''}` : '';
+    return `<tr class="${st === 'overdue' ? 'red overdue' : st === 'soon' ? 'red' : ''}">
+      <td><b>${esc(a.name)}</b>${a.notes ? `<br><small style="color:var(--mut)">${esc(a.notes)}</small>` : ''}</td>
+      <td>${esc(a.serial)}</td><td>${esc(a.category)}</td>
+      <td>${esc(teamName(a.teamId))}</td><td>${esc(memName(a.memberId))}</td>
+      <td><span class="badge ${a.status === 'شغال' ? 'grn' : 'amb'}">${esc(a.status)}</span></td>
+      <td>${calCell}</td><td><div class="acts">${acts}</div></td></tr>`;
+  }).join('');
+}
+
+function chip(a){
+  const st = calState(a);
+  return `<span class="chip ${st === 'soon' || st === 'overdue' ? 'red' : ''}" onclick="${can.edit() ? `editAsset('${a.id}')` : ''}">${esc(a.name)}</span>`;
+}
+function renderTeams(){
+  if (!db.teams.length){ $('teamGrid').innerHTML = '<div class="empty">مفيش تيمات — الأدمن يضيفها من الإعدادات</div>'; return; }
+  $('teamGrid').innerHTML = db.teams.map(t => {
+    const as = db.assets.filter(a => a.teamId === t.id);
+    const mems = db.members.filter(m => m.teamId === t.id);
+    const free = as.filter(a => !member(a.memberId));
+    return `<div class="tcard"><h3>${esc(t.name)}</h3><div class="cnt">${as.length} جهاز • ${mems.length} عضو</div>
+      ${mems.map(m => { const ma = as.filter(a => a.memberId === m.id);
+        return `<div class="mem"><b>👤 ${esc(m.name)}</b> <span class="badge">${ma.length}</span><div>${ma.map(chip).join('') || '<small style="color:var(--mut)">لا يوجد أجهزة</small>'}</div></div>`; }).join('')}
+      <div class="mem"><b>🗄️ بدون مسؤول</b> <span class="badge">${free.length}</span><div>${free.map(chip).join('') || '<small style="color:var(--mut)">—</small>'}</div></div>
+    </div>`;
+  }).join('');
+}
+
+const LOG_ICON = { add:'➕', edit:'✏️', move:'🔁', del:'🗑️', 'cal-soon':'⏰', 'cal-over':'🚨', 'cal-done':'✅' };
+function logRow(l, drawer){
+  const unread = l.ts > lastSeen();
+  const cls = l.type === 'cal-over' || l.type === 'cal-soon' ? 'cal calx' : l.type === 'cal-done' ? 'cal' : '';
+  return `<div class="n ${cls} ${drawer && unread ? 'unread' : ''}"><div class="ic">${LOG_ICON[l.type] || '•'}</div>
+    <div><div>${esc(l.text)}</div><small>${esc(l.user)} • ${fmtTs(l.ts)}</small></div></div>`;
+}
+function renderLog(){
+  const f = $('lf').value;
+  const rows = db.log.filter(l => !f || (f === 'cal' ? l.type.startsWith('cal-') : l.type === f));
+  $('logList').innerHTML = rows.length ? rows.slice(0, 500).map(l => logRow(l, false)).join('') : '<div class="empty">مفيش حركة لسه</div>';
+}
+
+let nFilter = '';
+function renderDrawer(){
+  const rows = db.log.filter(l => !nFilter || (nFilter === 'cal' ? l.type.startsWith('cal-') : !l.type.startsWith('cal-')));
+  $('nlist').innerHTML = rows.length ? rows.slice(0, 200).map(l => logRow(l, true)).join('') : '<div class="empty">مفيش إشعارات</div>';
+  document.querySelectorAll('#drawer .tabs button').forEach(b => b.className = 'btn sm' + (b.dataset.nf === nFilter ? '' : ' sec'));
+}
+function renderBell(){
+  const n = db.log.filter(l => l.ts > lastSeen()).length;
+  $('bcount').textContent = n > 99 ? '99+' : n; $('bcount').classList.toggle('hidden', !n);
+}
+
+function renderSettings(){
+  if (!can.admin()) return;
+  $('teamList').innerHTML = db.teams.map(t => `<div class="li"><span>${esc(t.name)}</span>
+    <button class="btn sec sm" onclick="renameTeam('${t.id}')">تعديل</button><button class="btn red sm" onclick="delTeam('${t.id}')">حذف</button></div>`).join('') || '<div class="empty">—</div>';
+  $('newMemTeam').innerHTML = opt(db.teams, $('newMemTeam').value);
+  $('memList').innerHTML = db.members.map(m => `<div class="li"><span>${esc(m.name)} <small style="color:var(--mut)">— ${esc(teamName(m.teamId))}</small></span>
+    <button class="btn sec sm" onclick="renameMem('${m.id}')">تعديل</button><button class="btn red sm" onclick="delMem('${m.id}')">حذف</button></div>`).join('') || '<div class="empty">—</div>';
+}
+
+/* ---------- events: nav / filters / drawer ---------- */
+$('nav').addEventListener('click', e => {
+  const b = e.target.closest('button[data-t]'); if (!b) return;
+  document.querySelectorAll('#nav button').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('main .panel').forEach(p => p.classList.add('hidden'));
+  $('tab-' + b.dataset.t).classList.remove('hidden');
+});
+['q','ft','fm','fc'].forEach(id => $(id).addEventListener('input', () => { if (id === 'ft') $('fm').value = ''; renderFilters(); renderAssets(); }));
+$('lf').onchange = renderLog;
+$('bell').onclick = () => { $('drawer').classList.add('open'); renderDrawer(); };
+$('closeDrawer').onclick = () => $('drawer').classList.remove('open');
+$('markRead').onclick = () => { localStorage.setItem(seenKey(), Date.now()); renderBell(); renderDrawer(); };
+document.querySelectorAll('#drawer .tabs button').forEach(b => b.onclick = () => { nFilter = b.dataset.nf; renderDrawer(); });
+document.querySelectorAll('[data-close]').forEach(b => b.onclick = () => b.closest('dialog').close());
+
+/* ---------- asset form ---------- */
+let editId = null;
+function fillMemSelect(selId, teamId, sel){
+  $(selId).innerHTML = opt(db.members.filter(m => m.teamId === teamId), sel, 'بدون مسؤول');
+}
+$('aTeam').onchange = () => fillMemSelect('aMem', $('aTeam').value, '');
+$('mTeam').onchange = () => fillMemSelect('mMem', $('mTeam').value, '');
+$('aCal').addEventListener('change', () => {});
+$('addAsset').onclick = () => {
+  if (!db.teams.length) return toast('ضيف تيم الأول من الإعدادات');
+  editId = null; $('dAssetTitle').textContent = 'جهاز جديد';
+  ['aName','aSerial','aCat','aCal','aInt','aLast','aNotes'].forEach(i => $(i).value = '');
+  $('aStatus').value = 'شغال';
+  $('aTeam').innerHTML = opt(db.teams, $('ft').value || db.teams[0].id);
+  fillMemSelect('aMem', $('aTeam').value, '');
+  $('dAsset').showModal();
+};
+window.editAsset = id => {
+  const a = db.assets.find(x => x.id === id); if (!a) return;
+  editId = id; $('dAssetTitle').textContent = 'تعديل جهاز';
+  $('aName').value = a.name; $('aSerial').value = a.serial || ''; $('aCat').value = a.category || '';
+  $('aCal').value = a.calDate || ''; $('aInt').value = a.interval || ''; $('aLast').value = a.lastCal || '';
+  $('aNotes').value = a.notes || ''; $('aStatus').value = a.status || 'شغال';
+  $('aTeam').innerHTML = opt(db.teams, a.teamId); fillMemSelect('aMem', a.teamId, a.memberId);
+  $('dAsset').showModal();
+};
+$('fAsset').addEventListener('submit', e => {
+  if (!can.edit()) return;
+  const v = {
+    name: $('aName').value.trim(), serial: $('aSerial').value.trim(), category: $('aCat').value.trim(),
+    teamId: $('aTeam').value, memberId: $('aMem').value || '', status: $('aStatus').value,
+    calDate: $('aCal').value, interval: Number($('aInt').value) || '', lastCal: $('aLast').value, notes: $('aNotes').value.trim()
+  };
+  if (!v.name || !v.teamId) return;
+  if (!editId){
+    const a = { id: uid(), ...v };
+    db.assets.push(a);
+    addLog('add', `إضافة جهاز "${a.name}" إلى ${teamName(a.teamId)} — ${memName(a.memberId)}`, { assetId: a.id });
+  } else {
+    const a = db.assets.find(x => x.id === editId);
+    const moved = a.teamId !== v.teamId || a.memberId !== v.memberId;
+    const from = `${teamName(a.teamId)} / ${memName(a.memberId)}`;
+    Object.assign(a, v);
+    if (moved) addLog('move', `نقل "${a.name}" من ${from} إلى ${teamName(a.teamId)} / ${memName(a.memberId)}`, { assetId: a.id });
+    else addLog('edit', `تعديل بيانات "${a.name}"`, { assetId: a.id });
+  }
+  saveDb(); checkCalibration(); saveDb(); renderAll(); toast('تم الحفظ');
+});
+
+/* ---------- move ---------- */
+let moveId = null;
+window.moveAsset = id => {
+  const a = db.assets.find(x => x.id === id); if (!a) return;
+  moveId = id; $('dMoveTitle').textContent = `نقل: ${a.name}`;
+  $('dMoveFrom').textContent = `الحالي: ${teamName(a.teamId)} / ${memName(a.memberId)}`;
+  $('mTeam').innerHTML = opt(db.teams, a.teamId); fillMemSelect('mMem', a.teamId, a.memberId); $('mNote').value = '';
+  $('dMove').showModal();
+};
+$('fMove').addEventListener('submit', () => {
+  const a = db.assets.find(x => x.id === moveId); if (!a) return;
+  const from = `${teamName(a.teamId)} / ${memName(a.memberId)}`;
+  a.teamId = $('mTeam').value; a.memberId = $('mMem').value || '';
+  const note = $('mNote').value.trim();
+  addLog('move', `نقل "${a.name}" من ${from} إلى ${teamName(a.teamId)} / ${memName(a.memberId)}${note ? ' — ' + note : ''}`, { assetId: a.id });
+  saveDb(); renderAll(); toast('تم النقل');
+});
+
+/* ---------- calibration done ---------- */
+let calId = null;
+window.calAsset = id => {
+  const a = db.assets.find(x => x.id === id); if (!a) return;
+  calId = id; $('dCalName').textContent = a.name;
+  $('cDone').value = ymd(new Date());
+  $('cNext').value = addMonths(ymd(new Date()), a.interval || 12);
+  $('dCal').showModal();
+};
+$('cDone').addEventListener('change', () => {
+  const a = db.assets.find(x => x.id === calId);
+  if ($('cDone').value) $('cNext').value = addMonths($('cDone').value, (a && a.interval) || 12);
+});
+$('fCal').addEventListener('submit', () => {
+  const a = db.assets.find(x => x.id === calId); if (!a) return;
+  a.lastCal = $('cDone').value; a.calDate = $('cNext').value;
+  addLog('cal-done', `تمت معايرة "${a.name}" بتاريخ ${a.lastCal}${a.calDate ? ' — الميعاد القادم ' + a.calDate : ''}`, { assetId: a.id });
+  saveDb(); checkCalibration(); saveDb(); renderAll(); toast('تم تسجيل المعايرة');
+});
+
+window.delAsset = id => {
+  const a = db.assets.find(x => x.id === id);
+  if (!a || !confirm(`حذف "${a.name}"؟`)) return;
+  db.assets = db.assets.filter(x => x.id !== id);
+  addLog('del', `حذف جهاز "${a.name}"`);
+  saveDb(); renderAll();
+};
+
+/* ---------- settings: teams & members ---------- */
+$('addTeam').onclick = () => {
+  const n = $('newTeam').value.trim(); if (!n) return;
+  db.teams.push({ id: uid(), name: n }); $('newTeam').value = ''; saveDb(); renderAll();
+};
+window.renameTeam = id => { const t = team(id), n = prompt('اسم التيم', t.name); if (n && n.trim()) { t.name = n.trim(); saveDb(); renderAll(); } };
+window.delTeam = id => {
+  if (db.assets.some(a => a.teamId === id)) return alert('التيم ده عليه أجهزة — انقلها الأول');
+  if (!confirm('حذف التيم وأعضاؤه؟')) return;
+  db.teams = db.teams.filter(t => t.id !== id); db.members = db.members.filter(m => m.teamId !== id); saveDb(); renderAll();
+};
+$('addMem').onclick = () => {
+  const n = $('newMem').value.trim(), t = $('newMemTeam').value; if (!n || !t) return toast('اكتب الاسم واختار التيم');
+  db.members.push({ id: uid(), name: n, teamId: t }); $('newMem').value = ''; saveDb(); renderAll();
+};
+window.renameMem = id => { const m = member(id), n = prompt('اسم العضو', m.name); if (n && n.trim()) { m.name = n.trim(); saveDb(); renderAll(); } };
+window.delMem = id => {
+  if (!confirm('حذف العضو؟ أجهزته هتبقى "بدون مسؤول"')) return;
+  db.assets.forEach(a => { if (a.memberId === id) a.memberId = ''; });
+  db.members = db.members.filter(m => m.id !== id); saveDb(); renderAll();
+};
+
+/* ---------- export / import / browser notif ---------- */
+function download(name, text, type){
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type })); a.download = name; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+$('expJson').onclick = () => download(`assets-backup-${ymd(new Date())}.json`, JSON.stringify(db, null, 2), 'application/json');
+$('expCsv').onclick = () => {
+  const cols = ['name','serial','category','team','member','status','calDate','lastCal','notes'];
+  const q = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+  const rows = db.assets.map(a => [a.name, a.serial, a.category, teamName(a.teamId), memName(a.memberId), a.status, a.calDate, a.lastCal, a.notes].map(q).join(','));
+  download(`assets-${ymd(new Date())}.csv`, '﻿' + cols.join(',') + '\n' + rows.join('\n'), 'text/csv');
+};
+$('impJson').onclick = () => $('impFile').click();
+$('impFile').onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const d = JSON.parse(r.result);
+      if (!d.assets || !d.teams || !d.members) throw 0;
+      if (!confirm('الـ Import هيستبدل كل البيانات الحالية. متأكد؟')) return;
+      db = { log: [], ...d }; saveDb(); checkCalibration(); renderAll(); toast('تم الاستيراد');
+    } catch(err){ alert('ملف غير صالح'); }
+  };
+  r.readAsText(f); e.target.value = '';
+};
+$('askNotif').onclick = () => {
+  if (!('Notification' in window)) return alert('المتصفح مش بيدعم الإشعارات');
+  Notification.requestPermission().then(p => toast(p === 'granted' ? 'تم تفعيل التنبيهات' : 'التنبيهات مش مفعّلة'));
+};
+</script>
+</body>
+</html>
