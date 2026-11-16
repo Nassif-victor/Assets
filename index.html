@@ -95,7 +95,7 @@ dialog h2{margin:0 0 12px;font-size:17px}
 <body>
 
 <!-- ============ LOGIN ============ -->
-<div id="login">
+<div id="login" class="hidden">
   <form class="lbox" id="lform" autocomplete="off">
     <h1>📦 Assets</h1>
     <p>سجّل دخولك للمتابعة</p>
@@ -114,7 +114,7 @@ dialog h2{margin:0 0 12px;font-size:17px}
     <div class="sp"></div>
     <span class="user" id="uname"></span>
     <button class="bell" id="bell" title="Notification Center">🔔<b id="bcount" class="hidden">0</b></button>
-    <button class="btn sec sm" id="logout">خروج</button>
+    
   </header>
   <nav id="nav">
     <button data-t="assets" class="on">الأجهزة</button>
@@ -247,33 +247,7 @@ const FIREBASE_CONFIG = {
 };
 const CLOUD = !!FIREBASE_CONFIG.apiKey && typeof firebase !== 'undefined';
 
-/* =====================================================
-   LOCAL USERS  —  عدّل المستخدمين هنا
-   role: admin    = كل الصلاحيات (تيمات/أعضاء/حذف/Import)
-         manager  = إضافة وتعديل ونقل الأجهزة وتسجيل المعايرة (مؤقتًا)
-         engineer = عرض فقط (مؤقتًا)
-   ===================================================== */
-const USERS = [
-  { u: 'nassif.victor', h: 'c2d4422a9787747e6e7c0448ff3b53a648b39c172ab6b952761d9be0e3b7b2fb', name: 'Nassif Victor', role: 'admin' },
-  { u: 'michael.emad', h: '7502ac1661b608d31220ad945762c209f0043692ded2df4c87deb991eceb8e83', name: 'Michael Emad', role: 'admin' },
-  { u: 'mina.wagih', h: 'fef8fb0fa4382fbb69c43c427ef3921394c1759bc7c3f0830b1a3331eeaca89a', name: 'Mina Wagih', role: 'manager' },
-  { u: 'amr.yasser', h: '3148c131f8ea012678f90256d2bf8a4fdf119bfdd8cf2555662e7368b9edc3b4', name: 'Amr Yasser', role: 'manager' },
-  { u: 'hashem.amer', h: '57460cc8b3db2849362f658b45f78fe32f292b54f59e82f0824916c910e3a2ae', name: 'Hashem Amer', role: 'manager' },
-  { u: 'abdelrahman.fathy', h: '44eee5e26aa3231df50b7bf62aaed45405ddebcd88aab05a6db8155ffd869562', name: 'Abdelrahman Fathy', role: 'engineer' },
-  { u: 'ahmed.atef', h: '24edf7d7e1f574060b4b949c292bcb10502fed8e598214906840a939a5e023fc', name: 'Ahmed Atef', role: 'engineer' },
-  { u: 'ahmed.thabet', h: '48b0130102371f23807f04b4f055bb150c866833f6da878e9dad5e3f8967c2a6', name: 'Ahmed Thabet', role: 'engineer' },
-  { u: 'peter.amgad', h: 'ef4e2e39e63094d4e6d53cfaf1c3a700db96f1aa87c8aa74fbbea8d2e5cce596', name: 'Peter Amgad', role: 'engineer' },
-  { u: 'ahmed.hesham', h: 'd3dfb055f3cf917ba63785d1476cb91618417b94b8ee96a0fa2cd95c47e67355', name: 'Ahmed Hesham', role: 'engineer' },
-  { u: 'amir.refaat', h: 'feb7b0a927aef21db9905fafbe0a58ef53b42385712229f6ff5db1dece8fe790', name: 'Amir Refaat', role: 'engineer' },
-  { u: 'mina.ashraf', h: '35e06f6e371148550f01b12578f08e8ee92cd0854c5eadbccaab980f6508df17', name: 'Mina Ashraf', role: 'engineer' },
-  { u: 'andrew.alfred', h: '954ced469788584e6051d2cf69fe89e051352c11cfd01a16707e5083ab8693dc', name: 'Andrew Alfred', role: 'engineer' },
-  { u: 'peter.adel', h: 'df2078c8396f9fcacd101f9e81703b0be1454be786ffa86e638e4f39b1f31544', name: 'Peter Adel', role: 'engineer' },
-  { u: 'pierre.mikhael', h: '849814bd24196e41f61fd6da5dbf989c6361e42cddab7c2dab554c866c7290b8', name: 'Pierre Mikhael', role: 'engineer' },
-  { u: 'zeyad.hamdy', h: '731b7c8996c2154abf15b12e6b310c315d1e22118baf567bd50ab8ac62d975d0', name: 'Zeyad Hamdy', role: 'engineer' },
-  { u: 'kirolos.ossama', h: '0280352e38b6bd79e4cc87a61561a60b145d545aad4759ee51b1476e29470676', name: 'Kirolos Ossama', role: 'engineer' },
-  { u: 'khaled.adel', h: '1d40c9123c820571844ea012746d79e114194a57ef36a2ecafd48ea9e387c5ac', name: 'Khaled Adel', role: 'engineer' }
-];
-const SALT = 'assets-v1';   // الباسوردات متخزنة كـ SHA-256 hash: sha256(SALT:username:password)
+const OPEN_USER = { u: 'open', name: 'مستخدم', role: 'admin' };   // مفيش لوجن — أي حد يفتح البرنامج بيدخل بالصلاحيات دي
 const WARN_MONTHS = 1;            // التنبيه قبل ميعاد المعايرة بكام شهر
 const DB_KEY = 'assets_db_v1', SESSION_KEY = 'assets_session_v1';
 
@@ -363,23 +337,6 @@ async function pushChanges(){
 let me = null;
 const can = { edit: () => me && (me.role === 'admin' || me.role === 'manager'), admin: () => me && me.role === 'admin' };
 
-async function sha256(t){
-  const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(t));
-  return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
-}
-$('lform').addEventListener('submit', async e => {
-  e.preventDefault();
-  if (!(window.crypto && crypto.subtle)) { $('lerr').textContent = 'افتح البرنامج من رابط https'; return; }
-  const name = $('lu').value.trim().toLowerCase();
-  const hash = await sha256(`${SALT}:${name}:${$('lp').value}`);
-  const u = USERS.find(x => x.u === name && x.h === hash);
-  if (!u) { $('lerr').textContent = 'اسم المستخدم أو الباسورد غلط'; return; }
-  $('lerr').textContent = '';
-  store.set(SESSION_KEY, u.u);
-  start(u);
-});
-$('logout').onclick = () => { store.del(SESSION_KEY); location.reload(); };
-
 function start(u){
   me = u;
   $('login').classList.add('hidden'); $('app').classList.remove('hidden');
@@ -390,11 +347,7 @@ function start(u){
   renderAll();
 }
 if (CLOUD) initCloud();
-(function auto(){
-  const s = store.get(SESSION_KEY);
-  const u = USERS.find(x => x.u === s);
-  if (u) start(u);
-})();
+
 
 /* ---------- log / notifications ---------- */
 function addLog(type, text, extra = {}){
@@ -724,6 +677,8 @@ $('askNotif').onclick = () => {
   if (!('Notification' in window)) return alert('المتصفح مش بيدعم الإشعارات');
   Notification.requestPermission().then(p => toast(p === 'granted' ? 'تم تفعيل التنبيهات' : 'التنبيهات مش مفعّلة'));
 };
+
+start(OPEN_USER);
 </script>
 </body>
 </html>
